@@ -110,7 +110,7 @@ class BoxOfficeListTableViewController: UIViewController {
             case .success(let movies):
                 self?.loading(.end)
                 
-                self?.title = (self?.orderType.title ?? "") + "순"
+                self?.navigationItem.title = (self?.orderType.title ?? "") + "순"
                 
                 self?.movies = movies
                 self?.boxOfficeListTableView?.reloadData()

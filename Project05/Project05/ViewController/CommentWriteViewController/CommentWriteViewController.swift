@@ -19,9 +19,11 @@ class CommentWriteViewController: UIViewController {
     @IBOutlet weak var commentWriterTextField: UITextField!
     @IBOutlet weak var commentContentsTextView: UITextView!
     
-    let commentCornerRadius: CGFloat = 5.0
-    let commentBorderWidth: CGFloat = 1.0
-    let commentBorderColor: UIColor = #colorLiteral(red: 0.3137254902, green: 0.431372549, blue: 0.7843137255, alpha: 1)
+    struct Style {
+        static let commentCornerRadius: CGFloat = 5.0
+        static let commentBorderWidth: CGFloat = 1.0
+        static let commentBorderColor: UIColor = #colorLiteral(red: 0.3137254902, green: 0.431372549, blue: 0.7843137255, alpha: 1)
+    }
     
     var movieID: String?
     var movieTitle: String?
@@ -50,9 +52,9 @@ class CommentWriteViewController: UIViewController {
     
     // MARK: init
     private func setupUI() {
-        self.commentContentsTextView.cornerRadius = self.commentCornerRadius
-        self.commentContentsTextView.borderWidth = self.commentBorderWidth
-        self.commentContentsTextView.borderColor = self.commentBorderColor
+        self.commentContentsTextView.cornerRadius = Style.commentCornerRadius
+        self.commentContentsTextView.borderWidth = Style.commentBorderWidth
+        self.commentContentsTextView.borderColor = Style.commentBorderColor
         
         self.movieTitleLabel.text = self.movieTitle
         self.movieGradeImageView.image = UIImage(named: self.movieGrade?.imageName ?? "")

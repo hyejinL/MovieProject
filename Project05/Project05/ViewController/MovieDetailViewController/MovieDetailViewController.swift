@@ -16,8 +16,12 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var movieDetailTableView: UITableView!
     @IBOutlet var movieCommentHeaderView: UIView!
     
-    let headerHeight: CGFloat = 48.0
-    let goWriteCommentViewIdentifier: String =  "goWriteCommentView"
+    struct Style {
+        static let headerHeight: CGFloat = 48.0
+    }
+    struct Const {
+        static let goWriteCommentViewIdentifier: String =  "goWriteCommentView"
+    }
     
     var movieID: String?
     var movie: Movie?
@@ -51,7 +55,7 @@ class MovieDetailViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == self.goWriteCommentViewIdentifier {
+        if segue.identifier == Const.goWriteCommentViewIdentifier {
             guard let navi = segue.destination as? UINavigationController,
                 let viewController = navi.viewControllers.first as? CommentWriteViewController else { return }
             viewController.movieID = self.movieID
@@ -131,7 +135,7 @@ extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 1 {
-            return headerHeight
+            return Style.headerHeight
         }
         return 0
     }

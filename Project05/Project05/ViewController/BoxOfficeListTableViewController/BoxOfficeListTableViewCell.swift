@@ -9,13 +9,6 @@
 import Foundation
 import UIKit
 
-//enum MovieGrade: Int {
-//    case allages = 0
-//    case age12 = 12
-//    case age15 = 15
-//    case age19 = 19
-//}
-
 // MARK: - BoxOfficeListTableViewCell
 class BoxOfficeListTableViewCell: UITableViewCell {
     
@@ -44,8 +37,6 @@ class BoxOfficeListTableViewCell: UITableViewCell {
         
         self.movieReleaseDateLabel.text = movie.date.dateToString("개봉일: yyyy년 MM월 dd일")
         
-//        let imageName = movie.grade == MovieGrade.allages.rawValue ? "ic_allages" : "ic_\(movie.grade)"
-//        self.movieGradeImageView.image = UIImage(named: imageName)
         self.movieGradeImageView.image = UIImage(named: movie.grade.imageName)
     }
     

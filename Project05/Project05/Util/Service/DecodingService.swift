@@ -22,15 +22,7 @@ extension DecodingService {
             
             return .success(decodeData)
         } catch let err {
-//            do {
-//                let error = try decoder.decode(ErrorMessage.self, from: data)
-//                print(error)
-//                let msg = (error.error ?? "") + (error.message ?? "")
-//                return .error("encode error : " + msg)
-//
-//            } catch let err {
-                return .error(err.localizedDescription)
-//            }
+            return .error(err.localizedDescription)
         }
     }
 }

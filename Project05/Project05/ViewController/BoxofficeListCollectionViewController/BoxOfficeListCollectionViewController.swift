@@ -19,12 +19,14 @@ class BoxOfficeListCollectionViewController: UIViewController {
     var queue = DispatchQueue(label: "com.hyejin.image.queue")
     let notification = NotificationCenter.default
     
-    var ratio: CGFloat = CGFloat()
-    let width: CGFloat = 177.0
-    let height: CGFloat = 306.0
-    let lineSpacing: CGFloat = 5.0
-    let itemSpacing: CGFloat = 5.0
-    let edgeInset: CGFloat = 7.0
+    struct Style {
+        static let ratio: CGFloat = UIScreen.main.bounds.width/375
+        static let width: CGFloat = 177.0
+        static let height: CGFloat = 306.0
+        static let lineSpacing: CGFloat = 5.0
+        static let itemSpacing: CGFloat = 5.0
+        static let edgeInset: CGFloat = 7.0
+    }
     
     // MARK: view init
     override func awakeFromNib() {
@@ -64,10 +66,8 @@ class BoxOfficeListCollectionViewController: UIViewController {
     
     // MARK: init
     private func setupUI() {
-        self.ratio = self.view.frame.width/375
-        
         let indicator = UIRefreshControl()
-        indicator.addTarget(self, action: #selector(refreshTableView(_:)), for: .valueChanged)
+        indicator.addTarget(self, action: #selector(refreshCollectionView(_:)), for: .valueChanged)
         self.boxOfficeListCollectionView.refreshControl = indicator
     }
     
@@ -78,7 +78,7 @@ class BoxOfficeListCollectionViewController: UIViewController {
                                  object: nil)
     }
     
-    @objc private func refreshTableView(_ sender: UIRefreshControl) {
+    @objc private func refreshCollectionView(_ sender: UIRefreshControl) {
         self.getMovies()
         sender.endRefreshing()
     }
@@ -109,7 +109,7 @@ class BoxOfficeListCollectionViewController: UIViewController {
             case .success(let movies):
                 self?.loading(.end)
                 
-                self?.title = (self?.orderType.title ?? "") + "순"
+                self?.navigationItem.title = (self?.orderType.title ?? "") + "순"
                 
                 self?.movies = movies
                 self?.boxOfficeListCollectionView?.reloadData()
@@ -162,19 +162,19 @@ extension BoxOfficeListCollectionViewController: UICollectionViewDelegate, UICol
 // MARK: - collectionView layout
 extension BoxOfficeListCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: width*ratio, height: height*ratio)
+        return CGSize(width: Style.width*Style.ratio, height: Style.height*Style.ratio)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return lineSpacing*ratio
+        return Style.lineSpacing*Style.ratio
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return itemSpacing*ratio
+        return Style.itemSpacing*Style.ratio
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: edgeInset*ratio, left: edgeInset*ratio,
-                            bottom: edgeInset*ratio, right: edgeInset*ratio)
+        return UIEdgeInsets(top: Style.edgeInset*Style.ratio, left: Style.edgeInset*Style.ratio,
+                            bottom: Style.edgeInset*Style.ratio, right: Style.edgeInset*Style.ratio)
     }
 }

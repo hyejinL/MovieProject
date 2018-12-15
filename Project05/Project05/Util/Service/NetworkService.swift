@@ -83,16 +83,6 @@ struct NetworkService: NetworkServiceProtocol {
                             completion: @escaping (Result<Data>) -> Swift.Void) {
         let session: URLSession = URLSession(configuration: .default)
         let dataTask: URLSessionDataTask = session.dataTask(with: request) { (data, res, err) in
-//            if let err = err {
-//                completion(.error(err.localizedDescription))
-//                return
-//            }
-//
-//            guard let data = data else { return }
-//            DispatchQueue.main.async {
-//                completion(.success(data))
-//                return
-//            }
             
             let complete: (Result<Data>) -> Void = { result in
                 DispatchQueue.main.async {
