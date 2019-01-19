@@ -17,7 +17,7 @@ class BoxOfficeListCollectionViewController: UIViewController {
     var movies: Movies?
     var orderType: OrderType = .AdvanceRate
     var queue = DispatchQueue(label: "com.hyejin.image.queue")
-    let notification = NotificationCenter.default
+    let notificationCenter = NotificationCenter.default
     
     struct Style {
         static let ratio: CGFloat = UIScreen.main.bounds.width/375
@@ -72,7 +72,7 @@ class BoxOfficeListCollectionViewController: UIViewController {
     }
     
     private func addObserver() {
-        notification.addObserver(self,
+        notificationCenter.addObserver(self,
                                  selector: #selector(didObserberAction(_:)),
                                  name: OrderTypeSignal.TableView.name,
                                  object: nil)
@@ -96,7 +96,7 @@ class BoxOfficeListCollectionViewController: UIViewController {
         let userInfo = [
             "orderType" : type
         ]
-        notification.post(name: OrderTypeSignal.CollectionView.name,
+        notificationCenter.post(name: OrderTypeSignal.CollectionView.name,
                           object: self, userInfo: userInfo)
         
         self.getMovies()
