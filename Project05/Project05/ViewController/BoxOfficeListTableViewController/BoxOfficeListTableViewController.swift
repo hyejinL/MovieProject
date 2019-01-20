@@ -27,7 +27,7 @@ class BoxOfficeListTableViewController: UIViewController {
     var movies: Movies?
     var orderType: OrderType = .AdvanceRate
     var queue = DispatchQueue(label: "com.hyejin.image.queue")
-    let notification = NotificationCenter.default
+    let notificationCenter = NotificationCenter.default
     
     // MARK: view init
     override func awakeFromNib() {
@@ -67,7 +67,7 @@ class BoxOfficeListTableViewController: UIViewController {
     
     // MARK: init
     private func addObserver() {
-        notification.addObserver(self,
+        notificationCenter.addObserver(self,
                                  selector: #selector(didObserberAction(_:)),
                                  name: OrderTypeSignal.CollectionView.name,
                                  object: nil)
@@ -97,7 +97,7 @@ class BoxOfficeListTableViewController: UIViewController {
         let userInfo = [
             "orderType" : type
         ]
-        notification.post(name: OrderTypeSignal.TableView.name,
+        notificationCenter.post(name: OrderTypeSignal.TableView.name,
                           object: self, userInfo: userInfo)
         
         self.getMovies()
