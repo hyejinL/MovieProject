@@ -25,14 +25,17 @@ class BoxOfficeListTableViewController: UIViewController {
     @IBOutlet weak var boxOfficeListTableView: UITableView!
     
     var movies: Movies?
-    var orderType: OrderType = .AdvanceRate
+    var orderType: OrderType = .AdvanceRate {
+        didSet {
+            self.getMovies()
+        }
+    }
     var queue = DispatchQueue(label: "com.hyejin.image.queue")
     let notification = NotificationCenter.default
     
     // MARK: view init
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         self.addObserver()
     }
     
@@ -41,9 +44,13 @@ class BoxOfficeListTableViewController: UIViewController {
         super.viewDidLoad()
         
         self.setupUI()
-        self.tableViewInit()
+        self.initTableView()
         
         self.loading(.start)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.getMovies()
     }
     
@@ -86,9 +93,7 @@ class BoxOfficeListTableViewController: UIViewController {
     
     @objc private func didObserberAction(_ notification: Notification) {
         guard let type = notification.userInfo?["orderType"] as? OrderType else { return }
-        
         self.orderType = type
-        self.getMovies()
     }
     
     private func changeOrderType(_ type: OrderType) {
@@ -99,8 +104,6 @@ class BoxOfficeListTableViewController: UIViewController {
         ]
         notification.post(name: OrderTypeSignal.TableView.name,
                           object: self, userInfo: userInfo)
-        
-        self.getMovies()
     }
     
     // MARK: network
@@ -125,7 +128,7 @@ class BoxOfficeListTableViewController: UIViewController {
 
 // MARK: - tableView delegate, dataSource
 extension BoxOfficeListTableViewController: UITableViewDelegate, UITableViewDataSource {
-    private func tableViewInit() {
+    private func initTableView() {
         self.boxOfficeListTableView.delegate = self; self.boxOfficeListTableView.dataSource = self
     }
     
